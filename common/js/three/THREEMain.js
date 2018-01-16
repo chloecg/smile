@@ -23,14 +23,14 @@ THREEMain = ( function()
 	/*
 	INIT
 	*/
-	THREEMain.prototype.create = function( _id, _fronturls, _backurls, _url )
+	THREEMain.prototype.create = function( _id, _fronturls, _bgpic, _url )
 	{
 
 		var _op = {};
 		_op._parent = this;
 		_op._id = _id;
 		_op._fronturls = _fronturls;
-		_op._backurls = _backurls
+		_op._bgpic = _bgpic
 
 		;
 		_op._url = _url;

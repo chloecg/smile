@@ -11,13 +11,13 @@ World = (function() {
     function World(_op) {
         this._objMng;
 
-        this.isShrinking = false;
+        this.isOver = false;
         this.isAction = false;
 
         this._parent = _op._parent;
         this._id = _op._id;
         this._fronturls = _op._fronturls;
-        this._backurls = _op._backurls;
+        this._bgpic = _op._bgpic;
         this._url = _op._url;
 
         this._stageWidth = document.getElementById(this._id).getBoundingClientRect().width;
@@ -65,33 +65,24 @@ World = (function() {
 
 
         //
-        /*var _www = this;
+        var _www = this;
 
-        // $(String("#" + _www._id)).hover(
-        //     function() {
-        //         _www.mOver();
-        //     },
-        //     function() {
-        //         _www.mOut();
-        //     }
-        // );
-
-        //$(String("#" + _www._id)).click(
-        $(document).click(
+        $(String("#" + _www._id)).hover(
             function() {
+                document.body.style.cursor = "pointer";
                 _www.mOver();
-                window.setTimeout(function() {
-                    _www.mOut();
-                }, 2000);
-
-                // if (_www.isShrinking) {
-                //     _www.mOut();
-                // } else {
-                //     _www.mOver();
-                // }
-                // pageJump(_www._url);
+            },
+            function() {
+                document.body.style.cursor = "default";
+                _www.mOut();
             }
-        );*/
+        );
+
+        $(String("#" + _www._id)).click(
+            function() {
+                pageJump(_www._url);
+            }
+        );
 
 
         //
@@ -104,15 +95,15 @@ World = (function() {
     OVER
     */
     World.prototype.mOver = function() {
-        if (!this.isShrinking) {
-            this.isShrinking = true;
+        if (!this.isOver) {
+            this.isOver = true;
             this.isAction = true;
         }
     }
 
     World.prototype.mOut = function() {
-        if (this.isShrinking) {
-            this.isShrinking = false;
+        if (this.isOver) {
+            this.isOver = false;
         }
     }
 

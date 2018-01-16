@@ -91,8 +91,8 @@ PointMngCV = (function() {
 
 
 
-    PointMngCV.prototype.getPoint = function(isShrinking) {
-        if (isShrinking) {
+    PointMngCV.prototype.getPoint = function(isOver) {
+        if (isOver) {
             this._currentV.x = (this._currentV.x * this._speedB) + (this._trgV.x * this._speedA);
             this._currentV.y = (this._currentV.y * this._speedB) + (this._trgV.y * this._speedA);
             this._currentV.z = (this._currentV.z * this._speedB) + (this._trgV.z * this._speedA);

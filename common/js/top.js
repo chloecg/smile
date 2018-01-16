@@ -5,20 +5,22 @@ common
 var _main;
 
 var bgPics = [
-  "common/js/share/smt1.1.jpg",
-  "common/js/share/smt1.2.jpg",
-  "common/js/share/smt1.4.jpg",
-  "common/js/share/smt1.5.jpg",
-  "common/js/share/smt1.6.jpg",
-  "common/js/share/smt1.7.jpg",
-  "common/js/share/smt1.8.jpg"
+  "common/js/share/instp.jpg",
+  "common/js/share/instp2.jpg"
 ];
 
-var ftPics = [
-  "common/js/share/smilemockup1.png",
-  "common/js/share/smilemockup1.png",
-  "common/js/share/smilemockup1.png"
-]
+var ftpics = [
+  "common/js/share/insbp1.png",
+  "common/js/share/insbp2.png",
+  "common/js/share/insbp3.png",
+  "common/js/share/insbp4.png",
+  "common/js/share/insbp5.png",
+  "common/js/share/insbp6.png",
+  "common/js/share/insbp7.png",
+  "common/js/share/insbp8.png",
+  "common/js/share/insbp9.png",
+  "common/js/share/insbp10.png"
+];
 
 
 
@@ -37,7 +39,7 @@ var Main = (function() {
     function Main() {
         this._threeMain;
 
-        this._worksList = ["mainDiv", ftPics, bgPics, "http://outernets.co/"];
+        this._worksList = ["mainDiv", ftpics, bgPics, "http://outernets.co/"];
 
 
         this._modelCount = 0;
@@ -57,7 +59,7 @@ var Main = (function() {
         document.body.style.position = "fixed";
         window.scrollTo(0, 0);
         document.getElementById("container").style.visibility = "hidden";
-        document.getElementById("container").style.top = "30px";
+        document.getElementById("container").style.top = "0px";
         document.getElementById("container").style.opacity = "0";
 
         //tjree.js
@@ -128,11 +130,11 @@ var Main = (function() {
 
         //
         $('#container').animate({
-            top: '-10px',
+            top: '0px',
             opacity: 1
         }, 600, 'easieEaseOutCubic');
 
-        // window.scrollTo(0, 0);
+        window.scrollTo(0, 0);
     }
 
 

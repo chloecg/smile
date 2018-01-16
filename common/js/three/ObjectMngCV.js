@@ -59,7 +59,7 @@ ObjectMngCV = (function() {
 
 
 
-    ObjectMngCV.prototype.createPlane = function() {
+    ObjectMngCV.prototype.createPlane = function(e) {
         var _this = this;
         var currentPic = Math.floor(Math.random() * this._world._fronturls.length);
         console.log(currentPic);
@@ -71,40 +71,51 @@ ObjectMngCV = (function() {
 
 
     //变形的planeGeometry
-    ObjectMngCV.prototype.recreateFrontPlane = function(e) {
-        if (this._mesh != null || this._mesh != undefined) {
-            this._world.removeMesh(this._mesh, null);
-        }
+    ObjectMngCV.prototype.recreateFrontPlane = function(e){
+      if (this._mesh != null || this._mesh != undefined) {
+          this._world.removeMesh(this._mesh, this);
+      }
 
-        var map = e;
-        map.wrapS = map.wrapT = THREE.RepeatWrapping;
+      var map = e;
+      map.wrapS = map.wrapT = THREE.RepeatWrapping;
 
-        var _op = {
-            ambient: 0xFFFFFF,
-            color: 0xffffff,
-            side: THREE.DoubleSide,
-            map: map,
-            transparent: true,
-            opacity: 1,
-            overdraw: 0.5
-        };
+      var _op = {
+          ambient: 0xFFFFFF,
+          color: 0xffffff,
+          side: THREE.DoubleSide,
+          map: map,
+          transparent: true,
+          opacity: 1,
+          overdraw: 0.5
+      };
 
-        //var _material = new THREE.MeshBasicMaterial( _op );
-        //var _material = new THREE.MeshLambertMaterial( _op );
+      //var _material = new THREE.MeshBasicMaterial( _op );
+      //var _material = new THREE.MeshLambertMaterial( _op );
 
-        var _material = new THREE.MeshPhongMaterial(_op);
+      var _material = new THREE.MeshPhongMaterial(_op);
 
 
-        this._geo = new THREE.PlaneGeometry(this._world._stageWidth, this._world._stageWidth, this._segW, this._segH);
-        this._geo.dymanic = true;
+      this._geo = new THREE.PlaneGeometry(this._world._stageWidth, this._world._stageWidth, this._segW, this._segH);
+      this._geo.dymanic = true;
 
-        this._mesh = new THREE.Mesh(this._geo, _material);
+      this._mesh = new THREE.Mesh(this._geo, _material);
 
-        this._world.addMesh(this._mesh, this);
+      this._world.addMesh(this._mesh, this);
 
 
     }
 
+    //
+    ObjectMngCV.prototype.recreateVlist = function() {
+
+        this._vList = [];
+        var randomNum = Math.random();
+        for (var i = 0; i < this._geo.vertices.length; i++) {
+            var _v = new PointMngCV(this._geo.vertices[i], i, this, randomNum);
+            this._vList.push(_v);
+        }
+
+    }
 
     /*
     TEXT FRAME
@@ -115,8 +126,8 @@ ObjectMngCV = (function() {
         }
 
         var currentPic = Math.floor(Math.random() * bgPics.length);
-        //console.log(currentPic);
-        var map = THREE.ImageUtils.loadTexture(this._world._backurls[currentPic]);
+        console.log(currentPic);
+        var map = THREE.ImageUtils.loadTexture(this._world._bgpic[[currentPic]]);
         map.wrapS = map.wrapT = THREE.RepeatWrapping;
 
         var _op = {
@@ -124,7 +135,7 @@ ObjectMngCV = (function() {
             map: map,
             wireframe: false,
             transparent: true,
-            opacity: 0
+            opacity: 0,
         };
 
 
@@ -141,20 +152,6 @@ ObjectMngCV = (function() {
     }
 
 
-    //
-    ObjectMngCV.prototype.recreateVlist = function() {
-
-        this._vList = [];
-        var randomNum = Math.random();
-        for (var i = 0; i < this._geo.vertices.length; i++) {
-            var _v = new PointMngCV(this._geo.vertices[i], i, this, randomNum);
-            this._vList.push(_v);
-        }
-
-    }
-
-
-
     /*
     ENTER FRAME
     */
@@ -167,7 +164,7 @@ ObjectMngCV = (function() {
         var leng = this._geo.vertices.length;
 
 
-        if (this._world.isShrinking) {
+        if (this._world.isOver) {
             this._rz += 0.5;
 
             if (this._rz >= 360) {
@@ -211,7 +208,7 @@ ObjectMngCV = (function() {
                 this._geo.vertices[i].z = _nv.z;
             }
 
-            this._meshText.material.opacity -= 0.05;
+            this._meshText.material.opacity -= 0.005;
 
             if (this._meshText.material.opacity <= 0) {
                 this._meshText.material.opacity = 0;
@@ -223,10 +220,10 @@ ObjectMngCV = (function() {
             if (Math.abs(this._meshText.position.z - (-100)) < 1) {
 
                 this._world.animeEnd();
-                //this.createPlane();
-                this.recreateVlist();
-                this.recreateTextPlane();
-
+                //this.recreateVlist();
+                //this.recreateTextPlane();
+                //this.recreateFrontPlane();
+                this.createPlane();
 
             }
         }
